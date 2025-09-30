@@ -1,13 +1,16 @@
-import axios from "axios";
+//import axios from "axios";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { jwtDecode } from "jwt-decode";
+//import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { savePost } from "../features/posts/postsSlice";
 
 export default function NewPostModal({ show, handleClose }) {
     const [postContent, setPostContent] = useState("");
+    const dispatch = useDispatch()
 
     const handleSave = () => {
-        //Get stored JWT Token
+        /*//Get stored JWT Token
         const token = localStorage.getItem("authToken");
 
         //Decode the token to fetch user id
@@ -31,7 +34,11 @@ export default function NewPostModal({ show, handleClose }) {
             .catch((error) => {
 
                 console.error("Error", error)
-            })
+            }) */
+
+        dispatch(savePost(postContent))
+        handleClose()
+        setPostContent('')
     }
 
     return (
