@@ -1,9 +1,10 @@
 import { Button, Col, Image, Nav, Row, Spinner } from "react-bootstrap"
 import ProfilePostCard from "./ProfilePostCard"
-import { jwtDecode } from "jwt-decode"
-import { useEffect } from "react"
+// import { jwtDecode } from "jwt-decode"
+import { useEffect, useContext } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPostsByUser } from "../features/posts/postsSlice"
+import { AuthContext } from './AuthProvider'
 
 export default function ProfileMidBody() {
 
@@ -13,6 +14,11 @@ export default function ProfileMidBody() {
     const dispatch = useDispatch()
     const posts = useSelector(store => store.posts.posts)
     const loading = useSelector(store => store.posts.loading)
+    const { currentUser } = useContext(AuthContext)
+
+    useEffect(() => {
+        dispatch(fetchPostsByUser(currentUser.uid))
+    }, [dispatch, currentUser])
 
     /*const fetchPosts = (userId) => {
         fetch(`https://15a0e20f-89bb-4a0a-b88b-c1d90060eb7e-00-2bmtdh16rshw6.sisko.replit.dev/posts/user/${userId}`)
@@ -21,14 +27,14 @@ export default function ProfileMidBody() {
             .catch((error) => console.error("Error:", error))
     }*/
 
-    useEffect(() => {
-        const token = localStorage.getItem("authToken")
-        if (token) {
-            const decodedToken = jwtDecode(token)
-            const userId = decodedToken.id
-            dispatch(fetchPostsByUser(userId))
-        }
-    }, [dispatch])
+    // useEffect(() => {
+    //     const token = localStorage.getItem("authToken")
+    //     if (token) {
+    //         const decodedToken = jwtDecode(token)
+    //         const userId = decodedToken.id
+    //         dispatch(fetchPostsByUser(userId))
+    //     }
+    // }, [dispatch])
 
     return (
 
@@ -77,7 +83,7 @@ export default function ProfileMidBody() {
                 <Spinner animation="border" className="ms-3 mt-3" variant="info" />
             )}
             {posts.map((post) => (
-                <ProfilePostCard key={post.id} content={post.content} postId={post.id} />
+                <ProfilePostCard key={post.id} post={post} />
             ))}
         </Col>
 
