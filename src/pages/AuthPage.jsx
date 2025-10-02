@@ -101,7 +101,7 @@ export default function AuthPage() {
                 <Modal show={modalShow !== null} onHide={handleClose} animation={false} centered>
                     <Modal.Body>
                         <h2 className="mb-4" style={{ fontWeight: "bold" }}>
-                            {modalShow === "SignUp" ? "Create your account" : "Log in your acconut"}
+                            {modalShow === "SignUp" ? "Create your account" : "Log in your account"}
                         </h2>
                         <Form className="d-grid gap-2 px-5" onSubmit={modalShow === "SignUp" ? handleSignUp : handleLogin}>
                             <Form.Group className="mb-3" controlId="formBasicEmail">
