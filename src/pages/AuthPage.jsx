@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { Row, Col, Image, Button, Modal, ModalBody, Form } from "react-bootstrap"
 // import axios from "axios"
 // import useLocalStorage from "use-local-storage"
@@ -26,13 +26,13 @@ export default function AuthPage() {
     const { currentUser } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    /*useEffect(() => {
-        if (authToken) {
+    useEffect(() => {
+        if (currentUser) {
             navigate("/profile")
         }
-    }, [authToken, navigate])*/
+    }, [currentUser, navigate])
 
-    if (currentUser) navigate("/profile");
+    // if (currentUser) navigate("/profile");
 
     const handleSignUp = async (e) => {
         e.preventDefault();
